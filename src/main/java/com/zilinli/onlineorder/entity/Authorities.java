@@ -1,8 +1,8 @@
 //**********************************************************************************************************************
 // * Documentation
 // * Author: zilin.li
-// * Date: 02/23
-// * Definition: Implementation of Customer class.
+// * Date: 12/22
+// * Definition: Implementation of Authorities class.
 //**********************************************************************************************************************
 
 package com.zilinli.onlineorder.entity;
@@ -10,7 +10,7 @@ package com.zilinli.onlineorder.entity;
 // * Includes
 //**********************************************************************************************************************
 
-
+// System includes
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -20,8 +20,8 @@ import java.io.Serializable;
 // * Class definition
 //**********************************************************************************************************************
 @Entity
-@Table(name = "customer")
-public class Customer implements Serializable {
+@Table(name = "authorities")
+public class Authorities implements Serializable {
 
 //**********************************************************************************************************************
 // * Class constructors
@@ -30,6 +30,7 @@ public class Customer implements Serializable {
 //**********************************************************************************************************************
 // * Public methods
 //**********************************************************************************************************************
+
     public String getEmail() {
         return email;
     }
@@ -38,38 +39,13 @@ public class Customer implements Serializable {
         this.email = email;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getAuthorities() {
+        return authorities;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setAuthorities(String authorities) {
+        this.authorities = authorities;
     }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
 //**********************************************************************************************************************
 // * Protected methods
 //**********************************************************************************************************************
@@ -86,9 +62,6 @@ public class Customer implements Serializable {
 
     @Id
     private String email;
-    private String firstName;
-    private String lastName;
-    private String password;
-    private boolean enabled;
+    private String authorities;
 
 }

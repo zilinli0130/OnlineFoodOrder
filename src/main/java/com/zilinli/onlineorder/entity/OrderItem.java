@@ -1,8 +1,8 @@
 //**********************************************************************************************************************
 // * Documentation
 // * Author: zilin.li
-// * Date: 02/23
-// * Definition: Implementation of Customer class.
+// * Date: 12/22
+// * Definition: Implementation of OrderItem class.
 //**********************************************************************************************************************
 
 package com.zilinli.onlineorder.entity;
@@ -11,17 +11,15 @@ package com.zilinli.onlineorder.entity;
 //**********************************************************************************************************************
 
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 //**********************************************************************************************************************
 // * Class definition
 //**********************************************************************************************************************
 @Entity
-@Table(name = "customer")
-public class Customer implements Serializable {
+@Table(name = "orderitem")
+public class OrderItem implements Serializable {
 
 //**********************************************************************************************************************
 // * Class constructors
@@ -30,44 +28,29 @@ public class Customer implements Serializable {
 //**********************************************************************************************************************
 // * Public methods
 //**********************************************************************************************************************
-    public String getEmail() {
-        return email;
+
+    public int getId() {
+        return id;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
-    public String getLastName() {
-        return lastName;
+    public double getPrice() {
+        return price;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
+    public void setPrice(double price) {
+        this.price = price;
     }
 
 //**********************************************************************************************************************
@@ -83,12 +66,10 @@ public class Customer implements Serializable {
 //**********************************************************************************************************************
 
     private static final long serialVersionUID = 1L;
-
     @Id
-    private String email;
-    private String firstName;
-    private String lastName;
-    private String password;
-    private boolean enabled;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
+    private int quantity;
+    private double price;
 
 }

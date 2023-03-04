@@ -1,8 +1,8 @@
 //**********************************************************************************************************************
 // * Documentation
 // * Author: zilin.li
-// * Date: 02/23
-// * Definition: Implementation of Customer class.
+// * Date: 12/22
+// * Definition: Implementation of MenuItem class.
 //**********************************************************************************************************************
 
 package com.zilinli.onlineorder.entity;
@@ -20,8 +20,8 @@ import java.io.Serializable;
 // * Class definition
 //**********************************************************************************************************************
 @Entity
-@Table(name = "customer")
-public class Customer implements Serializable {
+@Table(name = "menuitem")
+public class MenuItem implements Serializable {
 
 //**********************************************************************************************************************
 // * Class constructors
@@ -30,44 +30,37 @@ public class Customer implements Serializable {
 //**********************************************************************************************************************
 // * Public methods
 //**********************************************************************************************************************
-    public String getEmail() {
-        return email;
+
+    public String getName() {
+        return name;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getDescription() {
+        return description;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getLastName() {
-        return lastName;
+    public double getPrice() {
+        return price;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setPrice(double price) {
+        this.price = price;
     }
 
-    public String getPassword() {
-        return password;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
 //**********************************************************************************************************************
@@ -85,10 +78,10 @@ public class Customer implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    private String email;
-    private String firstName;
-    private String lastName;
-    private String password;
-    private boolean enabled;
+    private int id;
+    private String name;
+    private String description;
+    private double price;
+    private String imageUrl;
 
 }

@@ -1,8 +1,8 @@
 //**********************************************************************************************************************
 // * Documentation
 // * Author: zilin.li
-// * Date: 02/23
-// * Definition: Implementation of Customer class.
+// * Date: 12/22
+// * Definition: Implementation of Restaurant class.
 //**********************************************************************************************************************
 
 package com.zilinli.onlineorder.entity;
@@ -20,8 +20,8 @@ import java.io.Serializable;
 // * Class definition
 //**********************************************************************************************************************
 @Entity
-@Table(name = "customer")
-public class Customer implements Serializable {
+@Table(name = "restaurants")
+public class Restaurant implements Serializable {
 
 //**********************************************************************************************************************
 // * Class constructors
@@ -30,44 +30,45 @@ public class Customer implements Serializable {
 //**********************************************************************************************************************
 // * Public methods
 //**********************************************************************************************************************
-    public String getEmail() {
-        return email;
+
+    public int getId() {
+        return id;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getAddress() {
+        return address;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getName() {
+        return name;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public boolean isEnabled() {
-        return enabled;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
 //**********************************************************************************************************************
@@ -85,10 +86,9 @@ public class Customer implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    private String email;
-    private String firstName;
-    private String lastName;
-    private String password;
-    private boolean enabled;
-
+    private int id;
+    private String address;
+    private String name;
+    private String phone;
+    private String imageUrl;
 }
