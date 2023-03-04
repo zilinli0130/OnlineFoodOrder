@@ -11,10 +11,9 @@ package com.zilinli.onlineorder.entity;
 //**********************************************************************************************************************
 
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 //**********************************************************************************************************************
 // * Class definition
@@ -71,6 +70,14 @@ public class Restaurant implements Serializable {
         this.imageUrl = imageUrl;
     }
 
+    public List<MenuItem> getMenuItemList() {
+        return menuItemList;
+    }
+
+    public void setMenuItemList(List<MenuItem> menuItemList) {
+        this.menuItemList = menuItemList;
+    }
+
 //**********************************************************************************************************************
 // * Protected methods
 //**********************************************************************************************************************
@@ -91,4 +98,9 @@ public class Restaurant implements Serializable {
     private String name;
     private String phone;
     private String imageUrl;
+
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    // "restaurant" is the name of data field in MenuItem
+    // fetch eager: get menu item list information when querying the restaurant information
+    private List<MenuItem> menuItemList;
 }

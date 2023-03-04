@@ -11,9 +11,7 @@ package com.zilinli.onlineorder.entity;
 //**********************************************************************************************************************
 
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 //**********************************************************************************************************************
@@ -70,6 +68,14 @@ public class Customer implements Serializable {
         this.enabled = enabled;
     }
 
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
+
 //**********************************************************************************************************************
 // * Protected methods
 //**********************************************************************************************************************
@@ -90,5 +96,9 @@ public class Customer implements Serializable {
     private String lastName;
     private String password;
     private boolean enabled;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(unique = true)
+    private Cart cart;
 
 }

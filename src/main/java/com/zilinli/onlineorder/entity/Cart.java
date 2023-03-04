@@ -13,6 +13,7 @@ package com.zilinli.onlineorder.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 //**********************************************************************************************************************
 // * Class definition
@@ -44,6 +45,14 @@ public class Cart implements Serializable {
     public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
     }
+
+    public List<OrderItem> getOrderItemList() {
+        return orderItemList;
+    }
+    public void setOrderItemList(List<OrderItem> orderItemList) {
+        this.orderItemList = orderItemList;
+    }
+
 //**********************************************************************************************************************
 // * Protected methods
 //**********************************************************************************************************************
@@ -63,4 +72,7 @@ public class Cart implements Serializable {
     private int id;
 
     private double totalPrice;
+
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<OrderItem> orderItemList;
 }

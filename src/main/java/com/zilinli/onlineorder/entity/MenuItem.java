@@ -11,8 +11,11 @@ package com.zilinli.onlineorder.entity;
 //**********************************************************************************************************************
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
 
@@ -62,6 +65,13 @@ public class MenuItem implements Serializable {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
+    public Restaurant getRestaurant() {
+        return restaurant;
+    }
+
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
+    }
 
 //**********************************************************************************************************************
 // * Protected methods
@@ -83,5 +93,10 @@ public class MenuItem implements Serializable {
     private String description;
     private double price;
     private String imageUrl;
+
+    @ManyToOne
+    @JsonIgnore
+    // Ignore this data field when json is doing deserialization
+    private Restaurant restaurant;
 
 }

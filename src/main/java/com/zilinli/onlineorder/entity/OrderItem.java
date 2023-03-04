@@ -11,6 +11,8 @@ package com.zilinli.onlineorder.entity;
 //**********************************************************************************************************************
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -53,6 +55,22 @@ public class OrderItem implements Serializable {
         this.price = price;
     }
 
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
+
+    public MenuItem getMenuItem() {
+        return menuItem;
+    }
+
+    public void setMenuItem(MenuItem menuItem) {
+        this.menuItem = menuItem;
+    }
+
 //**********************************************************************************************************************
 // * Protected methods
 //**********************************************************************************************************************
@@ -71,5 +89,12 @@ public class OrderItem implements Serializable {
     private int id;
     private int quantity;
     private double price;
+
+    @ManyToOne
+    @JsonIgnore
+    private Cart cart;
+
+    @ManyToOne
+    private MenuItem menuItem;
 
 }

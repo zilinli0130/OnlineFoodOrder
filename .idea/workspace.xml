@@ -9,16 +9,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bfa322f3-4315-4973-9799-30e810568514" name="Changes" comment="Create online order project">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/zilinli/onlineorder/entity/Authorities.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/zilinli/onlineorder/entity/Cart.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/zilinli/onlineorder/entity/MenuItem.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/zilinli/onlineorder/entity/OrderItem.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/zilinli/onlineorder/entity/Restaurant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/onlineOrder_war_exploded.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/onlineOrder_war_exploded.xml" afterDir="false" />
+    <list default="true" id="bfa322f3-4315-4973-9799-30e810568514" name="Changes" comment="Create entities for DB">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/zilinli/onlineorder/ApplicationConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zilinli/onlineorder/ApplicationConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/zilinli/onlineorder/entity/Cart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zilinli/onlineorder/entity/Cart.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/zilinli/onlineorder/entity/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zilinli/onlineorder/entity/Customer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/zilinli/onlineorder/entity/MenuItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zilinli/onlineorder/entity/MenuItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/zilinli/onlineorder/entity/OrderItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zilinli/onlineorder/entity/OrderItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/zilinli/onlineorder/entity/Restaurant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zilinli/onlineorder/entity/Restaurant.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,20 +49,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/zslzl/IdeaProjects/jupiter",
-    "spring.configuration.checksum": "bb946ecd6429a52e68f5bc001dba9e6c"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/zslzl/IdeaProjects/jupiter&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;bb946ecd6429a52e68f5bc001dba9e6c&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="Tomcat" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat" ALTERNATIVE_JRE_ENABLED="false">
       <deployment>
@@ -163,7 +161,8 @@
       <updated>1677708397647</updated>
       <workItem from="1677708399492" duration="1842000" />
       <workItem from="1677724366287" duration="6158000" />
-      <workItem from="1677949192659" duration="4087000" />
+      <workItem from="1677949192659" duration="5375000" />
+      <workItem from="1677967828438" duration="5383000" />
     </task>
     <task id="LOCAL-00001" summary="Create online order project">
       <created>1677732265653</created>
@@ -172,7 +171,14 @@
       <option name="project" value="LOCAL" />
       <updated>1677732265653</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Create entities for DB">
+      <created>1677955910987</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1677955910987</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -191,6 +197,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Create online order project" />
-    <option name="LAST_COMMIT_MESSAGE" value="Create online order project" />
+    <MESSAGE value="Create entities for DB" />
+    <option name="LAST_COMMIT_MESSAGE" value="Create entities for DB" />
   </component>
 </project>
