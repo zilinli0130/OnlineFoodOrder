@@ -1,29 +1,30 @@
 //**********************************************************************************************************************
 // * Documentation
 // * Author: zilin.li
-// * Date: 02/23
-// * Definition: Implementation of CustomerDap class.
+// * Date: 12/22
+// * Definition: Implementation of MenuInfoController class.
 //**********************************************************************************************************************
 
-package com.zilinli.onlineorder.dao;
+package com.zilinli.onlineorder.controller;
 //**********************************************************************************************************************
 // * Includes
 //**********************************************************************************************************************
-// Project includes
-import com.zilinli.onlineorder.entity.Authorities;
-import com.zilinli.onlineorder.entity.Customer;
 
 // Framework includes
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import com.zilinli.onlineorder.entity.MenuItem;
+import com.zilinli.onlineorder.entity.Restaurant;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+
+// System includes
+import java.util.ArrayList;
+import java.util.List;
 
 //**********************************************************************************************************************
 // * Class definition
 //**********************************************************************************************************************
-@Repository
-public class CustomerDao {
+@Controller
+public class MenuInfoController {
 
 //**********************************************************************************************************************
 // * Class constructors
@@ -32,48 +33,17 @@ public class CustomerDao {
 //**********************************************************************************************************************
 // * Public methods
 //**********************************************************************************************************************
-    public void signUp(Customer customer) {
 
-        Authorities authorities = new Authorities();
-        authorities.setAuthorities("ROLE_USER");
-        authorities.setEmail(customer.getEmail());
-
-        Session session = null;
-        try {
-            session = sessionFactory.openSession();
-            session.beginTransaction();
-            session.save(authorities);
-            session.save(customer);
-            session.getTransaction().commit();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            if (session != null) {
-                session.getTransaction().rollback();
-            }
-
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
+    @RequestMapping(value = "/restaurant/{restaurantId}/menu", method = RequestMethod.GET)
+    @ResponseBody
+    public List<MenuItem> getMenuItems(@PathVariable("restaurantId") int restaurantId) {
+        return new ArrayList<>();
     }
 
-    public Customer getCustomer(String email) {
-        Customer customer = null;
-        Session session = null;
-        try {
-            session = sessionFactory.openSession();
-            customer = session.get(Customer.class, email);
-        } catch (Exception e) {
-            e.printStackTrace();
-
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
-        return customer;
+    @RequestMapping(value = "/restaurants", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Restaurant> getRestaurants() {
+        return new ArrayList<>();
     }
 //**********************************************************************************************************************
 // * Protected methods
@@ -87,6 +57,5 @@ public class CustomerDao {
 // * Private attributes
 //**********************************************************************************************************************
 
-    @Autowired
-    private SessionFactory sessionFactory;
+
 }

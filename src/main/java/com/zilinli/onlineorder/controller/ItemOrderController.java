@@ -1,29 +1,28 @@
 //**********************************************************************************************************************
 // * Documentation
 // * Author: zilin.li
-// * Date: 02/23
-// * Definition: Implementation of CustomerDap class.
+// * Date: 12/22
+// * Definition: Implementation of ItemOrderController class.
 //**********************************************************************************************************************
 
-package com.zilinli.onlineorder.dao;
+package com.zilinli.onlineorder.controller;
 //**********************************************************************************************************************
 // * Includes
 //**********************************************************************************************************************
-// Project includes
-import com.zilinli.onlineorder.entity.Authorities;
-import com.zilinli.onlineorder.entity.Customer;
 
 // Framework includes
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 //**********************************************************************************************************************
 // * Class definition
 //**********************************************************************************************************************
-@Repository
-public class CustomerDao {
+@Controller
+public class ItemOrderController {
 
 //**********************************************************************************************************************
 // * Class constructors
@@ -32,48 +31,10 @@ public class CustomerDao {
 //**********************************************************************************************************************
 // * Public methods
 //**********************************************************************************************************************
-    public void signUp(Customer customer) {
+    @RequestMapping(value = "/order/{menuId}", method = RequestMethod.POST)
+    @ResponseStatus(value = HttpStatus.CREATED)
+    public void addMenuItemToCart(@PathVariable("menuId") int menuId) {
 
-        Authorities authorities = new Authorities();
-        authorities.setAuthorities("ROLE_USER");
-        authorities.setEmail(customer.getEmail());
-
-        Session session = null;
-        try {
-            session = sessionFactory.openSession();
-            session.beginTransaction();
-            session.save(authorities);
-            session.save(customer);
-            session.getTransaction().commit();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            if (session != null) {
-                session.getTransaction().rollback();
-            }
-
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
-    }
-
-    public Customer getCustomer(String email) {
-        Customer customer = null;
-        Session session = null;
-        try {
-            session = sessionFactory.openSession();
-            customer = session.get(Customer.class, email);
-        } catch (Exception e) {
-            e.printStackTrace();
-
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
-        return customer;
     }
 //**********************************************************************************************************************
 // * Protected methods
@@ -87,6 +48,5 @@ public class CustomerDao {
 // * Private attributes
 //**********************************************************************************************************************
 
-    @Autowired
-    private SessionFactory sessionFactory;
+
 }
