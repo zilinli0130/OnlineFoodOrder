@@ -1,29 +1,32 @@
 //**********************************************************************************************************************
 // * Documentation
 // * Author: zilin.li
-// * Date: 02/23
-// * Definition: Implementation of CustomerDap class.
+// * Date: 12/22
+// * Definition: Implementation of OrderItemService class.
 //**********************************************************************************************************************
 
-package com.zilinli.onlineorder.dao;
+package com.zilinli.onlineorder.service;
 //**********************************************************************************************************************
 // * Includes
 //**********************************************************************************************************************
+
 // Project includes
-import com.zilinli.onlineorder.entity.Authorities;
+import com.zilinli.onlineorder.dao.OrderItemDao;
 import com.zilinli.onlineorder.entity.Customer;
+import com.zilinli.onlineorder.entity.MenuItem;
+import com.zilinli.onlineorder.entity.OrderItem;
 
 // Framework includes
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
 
 //**********************************************************************************************************************
 // * Class definition
 //**********************************************************************************************************************
-@Repository
-public class CustomerDao {
+@Service
+public class OrderItemService {
 
 //**********************************************************************************************************************
 // * Class constructors
@@ -32,48 +35,24 @@ public class CustomerDao {
 //**********************************************************************************************************************
 // * Public methods
 //**********************************************************************************************************************
-    public void signUp(Customer customer) {
+    public void saveOrderItem(int menuitemId) {
 
-        Authorities authorities = new Authorities();
-        authorities.setAuthorities("ROLE_USER");
-        authorities.setEmail(customer.getEmail());
+        OrderItem orderItem = new OrderItem();
 
-        Session session = null;
-        try {
-            session = sessionFactory.openSession();
-            session.beginTransaction();
-            session.save(authorities);
-            session.save(customer);
-            session.getTransaction().commit();
+        // Get the menu item
+        MenuItem menuItem = menuInfoService.getMenuItem(menuitemId);
 
-        } catch (Exception e) {
-            if (session != null) {
-                session.getTransaction().rollback();
-            }
-            throw e;
+        // Get the authorized customer
+        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+        String username = loggedInUser.getName();
+        Customer customer = customerService.getCustomer(username);
 
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
-    }
-
-    public Customer getCustomer(String email) {
-        Customer customer = null;
-        Session session = null;
-        try {
-            session = sessionFactory.openSession();
-            customer = session.get(Customer.class, email);
-        } catch (Exception e) {
-            e.printStackTrace();
-
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
-        return customer;
+        // Save order item
+        orderItem.setMenuItem(menuItem);
+        orderItem.setCart(customer.getCart()); // "add order item to cart"
+        orderItem.setQuantity(1);
+        orderItem.setPrice(menuItem.getPrice());
+        orderItemDao.save(orderItem);
     }
 //**********************************************************************************************************************
 // * Protected methods
@@ -88,5 +67,11 @@ public class CustomerDao {
 //**********************************************************************************************************************
 
     @Autowired
-    private SessionFactory sessionFactory;
+    private OrderItemDao orderItemDao;
+
+    @Autowired
+    private MenuInfoService menuInfoService;
+
+    @Autowired
+    private CustomerService customerService;
 }

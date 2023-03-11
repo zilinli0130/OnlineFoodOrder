@@ -12,8 +12,10 @@ package com.zilinli.onlineorder.controller;
 
 // Project includes
 import com.zilinli.onlineorder.entity.Cart;
+import com.zilinli.onlineorder.service.CartService;
 
 // Framework includes
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -35,7 +37,7 @@ public class CartController {
     @RequestMapping(value = "/cart", method = RequestMethod.GET)
     @ResponseBody
     public Cart getCart() {
-        return new Cart();
+        return cartService.getCart();
     }
 //**********************************************************************************************************************
 // * Protected methods
@@ -49,5 +51,7 @@ public class CartController {
 // * Private attributes
 //**********************************************************************************************************************
 
+    @Autowired
+    private CartService cartService;
 
 }

@@ -1,19 +1,17 @@
 //**********************************************************************************************************************
 // * Documentation
 // * Author: zilin.li
-// * Date: 02/23
-// * Definition: Implementation of CustomerDap class.
+// * Date: 12/22
+// * Definition: Implementation of OrderItemDao class.
 //**********************************************************************************************************************
 
 package com.zilinli.onlineorder.dao;
 //**********************************************************************************************************************
 // * Includes
 //**********************************************************************************************************************
-// Project includes
-import com.zilinli.onlineorder.entity.Authorities;
-import com.zilinli.onlineorder.entity.Customer;
 
 // Framework includes
+import com.zilinli.onlineorder.entity.OrderItem;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +21,7 @@ import org.springframework.stereotype.Repository;
 // * Class definition
 //**********************************************************************************************************************
 @Repository
-public class CustomerDao {
+public class OrderItemDao {
 
 //**********************************************************************************************************************
 // * Class constructors
@@ -32,48 +30,24 @@ public class CustomerDao {
 //**********************************************************************************************************************
 // * Public methods
 //**********************************************************************************************************************
-    public void signUp(Customer customer) {
 
-        Authorities authorities = new Authorities();
-        authorities.setAuthorities("ROLE_USER");
-        authorities.setEmail(customer.getEmail());
-
+    public void save(OrderItem orderItem) {
         Session session = null;
         try {
             session = sessionFactory.openSession();
             session.beginTransaction();
-            session.save(authorities);
-            session.save(customer);
+            session.save(orderItem);
             session.getTransaction().commit();
-
-        } catch (Exception e) {
+        } catch (Exception ex) {
+            ex.printStackTrace();
             if (session != null) {
                 session.getTransaction().rollback();
             }
-            throw e;
-
         } finally {
             if (session != null) {
                 session.close();
             }
         }
-    }
-
-    public Customer getCustomer(String email) {
-        Customer customer = null;
-        Session session = null;
-        try {
-            session = sessionFactory.openSession();
-            customer = session.get(Customer.class, email);
-        } catch (Exception e) {
-            e.printStackTrace();
-
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
-        return customer;
     }
 //**********************************************************************************************************************
 // * Protected methods
@@ -89,4 +63,5 @@ public class CustomerDao {
 
     @Autowired
     private SessionFactory sessionFactory;
+
 }

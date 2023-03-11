@@ -1,21 +1,21 @@
 //**********************************************************************************************************************
 // * Documentation
 // * Author: zilin.li
-// * Date: 02/23
-// * Definition: Implementation of CustomerDap class.
+// * Date: 12/22
+// * Definition: Implementation of CartDao class.
 //**********************************************************************************************************************
 
 package com.zilinli.onlineorder.dao;
 //**********************************************************************************************************************
 // * Includes
 //**********************************************************************************************************************
-// Project includes
-import com.zilinli.onlineorder.entity.Authorities;
-import com.zilinli.onlineorder.entity.Customer;
 
 // Framework includes
+import com.zilinli.onlineorder.entity.Cart;
+import com.zilinli.onlineorder.entity.OrderItem;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -23,7 +23,7 @@ import org.springframework.stereotype.Repository;
 // * Class definition
 //**********************************************************************************************************************
 @Repository
-public class CustomerDao {
+public class CartDao {
 
 //**********************************************************************************************************************
 // * Class constructors
@@ -32,48 +32,40 @@ public class CustomerDao {
 //**********************************************************************************************************************
 // * Public methods
 //**********************************************************************************************************************
-    public void signUp(Customer customer) {
 
-        Authorities authorities = new Authorities();
-        authorities.setAuthorities("ROLE_USER");
-        authorities.setEmail(customer.getEmail());
+    public void removeCartItem(int orderItemId) {
 
         Session session = null;
         try {
             session = sessionFactory.openSession();
+
+            // Remove order item from carts
+            OrderItem orderItem = session.get(OrderItem.class, orderItemId);
+            Cart cart = orderItem.getCart();
+            cart.getOrderItemList().remove(orderItem);
+
+            // Remove order item from db
             session.beginTransaction();
-            session.save(authorities);
-            session.save(customer);
+            session.delete(orderItem);
             session.getTransaction().commit();
 
-        } catch (Exception e) {
+        } catch (Exception ex) {
+            ex.printStackTrace();
             if (session != null) {
                 session.getTransaction().rollback();
             }
-            throw e;
-
         } finally {
             if (session != null) {
                 session.close();
             }
         }
+
     }
 
-    public Customer getCustomer(String email) {
-        Customer customer = null;
-        Session session = null;
-        try {
-            session = sessionFactory.openSession();
-            customer = session.get(Customer.class, email);
-        } catch (Exception e) {
-            e.printStackTrace();
-
-        } finally {
-            if (session != null) {
-                session.close();
-            }
+    public void removeAllCartItems(Cart cart) {
+        for (OrderItem orderItem : cart.getOrderItemList()) {
+            this.removeCartItem(orderItem.getId());
         }
-        return customer;
     }
 //**********************************************************************************************************************
 // * Protected methods

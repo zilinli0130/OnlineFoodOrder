@@ -10,7 +10,11 @@ package com.zilinli.onlineorder.controller;
 // * Includes
 //**********************************************************************************************************************
 
+// Project includes
+import com.zilinli.onlineorder.service.OrderItemService;
+
 // Framework includes
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,7 +38,7 @@ public class ItemOrderController {
     @RequestMapping(value = "/order/{menuId}", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.CREATED)
     public void addMenuItemToCart(@PathVariable("menuId") int menuId) {
-
+        orderItemService.saveOrderItem(menuId);
     }
 //**********************************************************************************************************************
 // * Protected methods
@@ -48,5 +52,6 @@ public class ItemOrderController {
 // * Private attributes
 //**********************************************************************************************************************
 
-
+    @Autowired
+    private OrderItemService orderItemService;
 }

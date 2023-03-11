@@ -1,29 +1,32 @@
 //**********************************************************************************************************************
 // * Documentation
 // * Author: zilin.li
-// * Date: 02/23
-// * Definition: Implementation of CustomerDap class.
+// * Date: 12/22
+// * Definition: Implementation of CartService class.
 //**********************************************************************************************************************
 
-package com.zilinli.onlineorder.dao;
+package com.zilinli.onlineorder.service;
 //**********************************************************************************************************************
 // * Includes
 //**********************************************************************************************************************
+
 // Project includes
-import com.zilinli.onlineorder.entity.Authorities;
+import com.zilinli.onlineorder.dao.CartDao;
+import com.zilinli.onlineorder.entity.Cart;
 import com.zilinli.onlineorder.entity.Customer;
 
 // Framework includes
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import com.zilinli.onlineorder.entity.OrderItem;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
 
 //**********************************************************************************************************************
 // * Class definition
 //**********************************************************************************************************************
-@Repository
-public class CustomerDao {
+@Service
+public class CartService {
 
 //**********************************************************************************************************************
 // * Class constructors
@@ -32,48 +35,36 @@ public class CustomerDao {
 //**********************************************************************************************************************
 // * Public methods
 //**********************************************************************************************************************
-    public void signUp(Customer customer) {
 
-        Authorities authorities = new Authorities();
-        authorities.setAuthorities("ROLE_USER");
-        authorities.setEmail(customer.getEmail());
+    public Cart getCart() {
 
-        Session session = null;
-        try {
-            session = sessionFactory.openSession();
-            session.beginTransaction();
-            session.save(authorities);
-            session.save(customer);
-            session.getTransaction().commit();
+        // Get the authorized customer
+        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+        String username = loggedInUser.getName();
+        Customer customer = customerService.getCustomer(username);
 
-        } catch (Exception e) {
-            if (session != null) {
-                session.getTransaction().rollback();
+        if (customer != null) {
+            Cart cart = customer.getCart();
+            double totalPrice = 0;
+            for (OrderItem orderItem : cart.getOrderItemList()) {
+                totalPrice += orderItem.getPrice() * orderItem.getQuantity();
             }
-            throw e;
-
-        } finally {
-            if (session != null) {
-                session.close();
-            }
+            cart.setTotalPrice(totalPrice);
+            return cart;
         }
+        return new Cart();
     }
 
-    public Customer getCustomer(String email) {
-        Customer customer = null;
-        Session session = null;
-        try {
-            session = sessionFactory.openSession();
-            customer = session.get(Customer.class, email);
-        } catch (Exception e) {
-            e.printStackTrace();
+    public void cleanCart() {
 
-        } finally {
-            if (session != null) {
-                session.close();
-            }
+        // Get the authorized customer
+        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+        String username = loggedInUser.getName();
+        Customer customer = customerService.getCustomer(username);
+
+        if (customer != null) {
+            cartDao.removeAllCartItems(customer.getCart());
         }
-        return customer;
     }
 //**********************************************************************************************************************
 // * Protected methods
@@ -88,5 +79,8 @@ public class CustomerDao {
 //**********************************************************************************************************************
 
     @Autowired
-    private SessionFactory sessionFactory;
+    private CustomerService customerService;
+
+    @Autowired
+    private CartDao cartDao;
 }

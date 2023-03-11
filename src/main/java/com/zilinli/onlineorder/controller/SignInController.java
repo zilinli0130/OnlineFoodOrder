@@ -1,29 +1,34 @@
 //**********************************************************************************************************************
 // * Documentation
 // * Author: zilin.li
-// * Date: 02/23
-// * Definition: Implementation of CustomerDap class.
+// * Date: 12/22
+// * Definition: Implementation of SignInController class.
 //**********************************************************************************************************************
 
-package com.zilinli.onlineorder.dao;
+package com.zilinli.onlineorder.controller;
 //**********************************************************************************************************************
 // * Includes
 //**********************************************************************************************************************
-// Project includes
-import com.zilinli.onlineorder.entity.Authorities;
-import com.zilinli.onlineorder.entity.Customer;
 
-// Framework includes
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 //**********************************************************************************************************************
 // * Class definition
 //**********************************************************************************************************************
-@Repository
-public class CustomerDao {
+@Controller
+public class SignInController {
 
 //**********************************************************************************************************************
 // * Class constructors
@@ -32,49 +37,14 @@ public class CustomerDao {
 //**********************************************************************************************************************
 // * Public methods
 //**********************************************************************************************************************
-    public void signUp(Customer customer) {
-
-        Authorities authorities = new Authorities();
-        authorities.setAuthorities("ROLE_USER");
-        authorities.setEmail(customer.getEmail());
-
-        Session session = null;
-        try {
-            session = sessionFactory.openSession();
-            session.beginTransaction();
-            session.save(authorities);
-            session.save(customer);
-            session.getTransaction().commit();
-
-        } catch (Exception e) {
-            if (session != null) {
-                session.getTransaction().rollback();
-            }
-            throw e;
-
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
+    @RequestMapping(value="/login")
+    public void login(@RequestParam(value = "error") String error, HttpServletResponse response) throws IOException {
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+        Map<String, Object> data = new HashMap<>();
+        data.put("message", "bad credentials");
+        response.getOutputStream().println(objectMapper.writeValueAsString(data));
     }
 
-    public Customer getCustomer(String email) {
-        Customer customer = null;
-        Session session = null;
-        try {
-            session = sessionFactory.openSession();
-            customer = session.get(Customer.class, email);
-        } catch (Exception e) {
-            e.printStackTrace();
-
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
-        return customer;
-    }
 //**********************************************************************************************************************
 // * Protected methods
 //**********************************************************************************************************************
@@ -87,6 +57,5 @@ public class CustomerDao {
 // * Private attributes
 //**********************************************************************************************************************
 
-    @Autowired
-    private SessionFactory sessionFactory;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 }

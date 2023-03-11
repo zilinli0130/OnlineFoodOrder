@@ -10,14 +10,17 @@ package com.zilinli.onlineorder.controller;
 // * Includes
 //**********************************************************************************************************************
 
-// Framework includes
+// Project includes
 import com.zilinli.onlineorder.entity.MenuItem;
 import com.zilinli.onlineorder.entity.Restaurant;
+import com.zilinli.onlineorder.service.MenuInfoService;
+
+// Framework includes
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 // System includes
-import java.util.ArrayList;
 import java.util.List;
 
 //**********************************************************************************************************************
@@ -37,13 +40,13 @@ public class MenuInfoController {
     @RequestMapping(value = "/restaurant/{restaurantId}/menu", method = RequestMethod.GET)
     @ResponseBody
     public List<MenuItem> getMenuItems(@PathVariable("restaurantId") int restaurantId) {
-        return new ArrayList<>();
+        return menuInfoService.getAllMenuItems(restaurantId);
     }
 
     @RequestMapping(value = "/restaurants", method = RequestMethod.GET)
     @ResponseBody
     public List<Restaurant> getRestaurants() {
-        return new ArrayList<>();
+        return menuInfoService.getRestaurants();
     }
 //**********************************************************************************************************************
 // * Protected methods
@@ -56,6 +59,6 @@ public class MenuInfoController {
 //**********************************************************************************************************************
 // * Private attributes
 //**********************************************************************************************************************
-
-
+    @Autowired
+    private MenuInfoService menuInfoService;
 }

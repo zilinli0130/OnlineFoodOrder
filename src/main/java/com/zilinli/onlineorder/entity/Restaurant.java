@@ -10,7 +10,7 @@ package com.zilinli.onlineorder.entity;
 // * Includes
 //**********************************************************************************************************************
 
-
+// System includes
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
